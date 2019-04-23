@@ -22,31 +22,18 @@ async function create (ctx) {
 
 async function update (ctx) {
   const id = ctx.params.id
-  const { username, password } = ctx.request.body
-  const user = await User.findOne({ username })
+  const { password } = ctx.request.body
   const pass = await Pass.findById(id)
-  if (pass.user === user._id) {
-    pass.password = password
-    const updatedPass = await pass.save()
-    ctx.body = updatedPass
-  } else {
-    ctx.status = 401
-    ctx.body = { error: "Unauthorized" }
-  }
+  pass.password = password
+  const updatedPass = await pass.save()
+  ctx.body = updatedPass
 }
 
 async function destroy (ctx) {
   const id = ctx.params.id
-  const { username } = ctx.request.body
-  const user = await User.findOne({ username })
   const pass = await Pass.findById(id)
-  if (pass.user === user._id) {
-    const deletedPass = await pass.remove()
-    ctx.body = deletedPass
-  } else {
-    ctx.status = 401
-    ctx.body = { error: "Unauthorized" }
-  }
+  const deletedPass = await pass.remove()
+  ctx.body = deletedPass
 }
 
 module.exports = {
