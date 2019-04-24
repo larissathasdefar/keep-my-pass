@@ -27,6 +27,80 @@ type PageInfoExtended {
   endCursor: String
 }
 
+"""Pass data"""
+type Pass implements Node {
+  """The ID of an object"""
+  id: ID!
+  _id: String
+  website: String
+  password: String
+  user: String
+}
+
+type PassAddedPayload {
+  passEdge: PassEdge
+}
+
+input PassChangePasswordInput {
+  """pass new password"""
+  password: String!
+  clientMutationId: String
+}
+
+type PassChangePasswordPayload {
+  error: String
+  pass: Pass
+  clientMutationId: String
+}
+
+"""A connection to a list of items."""
+type PassConnection {
+  """Number of items in this connection"""
+  count: Int!
+
+  """
+  A count of the total number of objects in this connection, ignoring pagination.
+    This allows a client to fetch the first five objects by passing "5" as the
+    argument to "first", then fetch the total count so it could display "5 of 83",
+    for example.
+  """
+  totalCount: Int!
+
+  """Offset from start"""
+  startCursorOffset: Int!
+
+  """Offset till end"""
+  endCursorOffset: Int!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfoExtended!
+
+  """A list of edges."""
+  edges: [PassEdge]!
+}
+
+input PassCreateInput {
+  website: String!
+  password: String!
+  user: String!
+  clientMutationId: String
+}
+
+type PassCreatePayload {
+  error: String
+  pass: Pass
+  clientMutationId: String
+}
+
+"""An edge in a connection."""
+type PassEdge {
+  """The item at the end of the edge"""
+  node: Pass!
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
 """The root of all... queries"""
 type Query {
   """Fetches an object given its ID"""
@@ -38,7 +112,7 @@ type Query {
   user(id: ID!): User
   users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
   pass(id: ID!): Pass
-  passes(after: String, first: Int, before: String, last: Int, search: String): PassConnection
+  passes(after: String, first: Int, before: String, last: Int): PassConnection
 }
 
 type Subscription {
@@ -130,80 +204,6 @@ input UserRegisterWithEmailInput {
 
 type UserRegisterWithEmailPayload {
   token: String
-  error: String
-  clientMutationId: String
-}
-
-"""Pass data"""
-type Pass implements Node {
-  """The ID of an object"""
-  id: ID!
-  _id: String
-  website: String
-  password: String
-  user: Boolean
-}
-
-type PassAddedPayload {
-  passEdge: PassEdge
-}
-
-input PassChangePasswordInput {
-  """pass new password"""
-  password: String!
-  clientMutationId: String
-}
-
-type PassChangePasswordPayload {
-  error: String
-  pass: Pass
-  clientMutationId: String
-}
-
-"""A connection to a list of items."""
-type PassConnection {
-  """Number of items in this connection"""
-  count: Int!
-
-  """
-  A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-  """
-  totalCount: Int!
-
-  """Offset from start"""
-  startCursorOffset: Int!
-
-  """Offset till end"""
-  endCursorOffset: Int!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfoExtended!
-
-  """A list of edges."""
-  edges: [PassEdge]!
-}
-
-"""An edge in a connection."""
-type PassEdge {
-  """The item at the end of the edge"""
-  node: Pass!
-
-  """A cursor for use in pagination"""
-  cursor: String!
-}
-
-input PassCreateInput {
-  website: String!
-  password: String!
-  user: String!
-  clientMutationId: String
-}
-
-type PassCreatePayload {
-  pass: Pass
   error: String
   clientMutationId: String
 }
