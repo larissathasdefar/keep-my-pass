@@ -1,4 +1,4 @@
-const pack = require("./package");
+const pack = require('./package');
 
 // const ignoredPaths = [
 //   '<rootDir>/node_modules/',
@@ -37,5 +37,4 @@ module.exports = {
   },
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(js?|ts?)$',
   moduleFileExtensions: ['ts', 'js'],
-
 };
