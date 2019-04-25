@@ -29,39 +29,32 @@ export default class Pass {
 
 export const getLoader = () => new DataLoader(ids => mongooseLoader(PassModel, ids));
 
-const viewerCanSee = () => true;
-
 export const load = async (context: GraphQLContext, id: string): Promise<Pass | null> => {
   if (!id) {
     return null;
   }
 
-  let data;
   try {
-    data = await context.dataloaders.PassLoader.load(id);
+    const data = await context.dataloaders.PassLoader.load(id)
+    return new Pass(data, context);
   } catch (err) {
     return null;
   }
-  return viewerCanSee() ? new Pass(data, context) : null;
 };
 
 export const clearCache = ({ dataloaders }: GraphQLContext, id: Types.ObjectId) => dataloaders.PassLoader.clear(id.toString());
 export const primeCache = ({ dataloaders }: GraphQLContext, id: Types.ObjectId, data: IPass) => dataloaders.PassLoader.prime(id.toString(), data);
 export const clearAndPrimeCache = (context: GraphQLContext, id: Types.ObjectId, data: IPass) => clearCache(context, id) && primeCache(context, id, data);
 
-type PassArgs = ConnectionArguments & {
-  search?: string;
-};
-export const loadPasses = async (context: GraphQLContext, user: string, args: PassArgs) => {
+export const loadPasses = async (context: GraphQLContext, user: string) => {
   if (!user) {
     return null;
   }
-  const passes = PassModel.find({ user });
 
-  return connectionFromMongoCursor({
-    cursor: passes,
-    context,
-    args,
-    loader: load,
-  });
+  try {
+    const passes = await PassModel.find({ user });
+    return passes;
+  } catch (err) {
+    return null;
+  }
 };

@@ -53,32 +53,6 @@ type PassChangePasswordPayload {
   clientMutationId: String
 }
 
-"""A connection to a list of items."""
-type PassConnection {
-  """Number of items in this connection"""
-  count: Int!
-
-  """
-  A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-  """
-  totalCount: Int!
-
-  """Offset from start"""
-  startCursorOffset: Int!
-
-  """Offset till end"""
-  endCursorOffset: Int!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfoExtended!
-
-  """A list of edges."""
-  edges: [PassEdge]!
-}
-
 input PassCreateInput {
   website: String!
   password: String!
@@ -112,7 +86,7 @@ type Query {
   user(id: ID!): User
   users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
   pass(id: ID!): Pass
-  passes(after: String, first: Int, before: String, last: Int): PassConnection
+  passes(user: ID!): [Pass!]
 }
 
 type Subscription {

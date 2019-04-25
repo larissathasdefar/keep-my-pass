@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID } from 'graphql';
+import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList, GraphQLID } from 'graphql';
 import { connectionArgs, fromGlobalId } from 'graphql-relay';
 
 import UserType, { UserConnection } from '../modules/user/UserType';
@@ -45,18 +45,18 @@ export default new GraphQLObjectType({
         },
       },
       resolve: (obj, args, context) => {
-        const { id } = fromGlobalId(args.id);
-        return PassLoader.load(context, id);
+        return PassLoader.load(context, args.id);
       },
     },
     passes: {
-      type: PassConnection.connectionType,
+      type: new GraphQLList(new GraphQLNonNull(PassType)),
       args: {
-        ...connectionArgs,
+        id: {
+          type: new GraphQLNonNull(GraphQLID),
+        },
       },
       resolve: (obj, args, context) => {
-        const { id } = fromGlobalId(args.id);
-        return PassLoader.loadPasses(context, id, args);
+        return PassLoader.loadPasses(context, args.id);
       },
     },
   }),
