@@ -86,7 +86,7 @@ type Query {
   user(id: ID!): User
   users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
   pass(id: ID!): Pass
-  passes(user: ID!): [Pass!]
+  passes(id: ID!): [Pass!]
 }
 
 type Subscription {
