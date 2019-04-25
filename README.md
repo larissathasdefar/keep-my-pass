@@ -1,8 +1,6 @@
-# Entria FullStack Playground
-![supported version](https://badgen.net/badge/node/lts/green)
+# Keep My Pass
 
-Let's us know how can we help
-
+It's an Node + Mongo + Mongoose + Koa api that intend to store your passwords.
 
 ### Status
 
