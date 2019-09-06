@@ -2,6 +2,8 @@ type Mutation {
   UserChangePassword(input: UserChangePasswordInput!): UserChangePasswordPayload
   UserLoginWithEmail(input: UserLoginWithEmailInput!): UserLoginWithEmailPayload
   UserRegisterWithEmail(input: UserRegisterWithEmailInput!): UserRegisterWithEmailPayload
+  PassChangePassword(input: PassChangePasswordInput!): PassChangePasswordPayload
+  PassCreate(input: PassCreateInput!): PassCreatePayload
 }
 
 """An object with an ID"""
@@ -25,6 +27,54 @@ type PageInfoExtended {
   endCursor: String
 }
 
+"""Pass data"""
+type Pass implements Node {
+  """The ID of an object"""
+  id: ID!
+  _id: String
+  website: String
+  password: String
+  user: String
+}
+
+type PassAddedPayload {
+  passEdge: PassEdge
+}
+
+input PassChangePasswordInput {
+  """pass new password"""
+  password: String!
+  clientMutationId: String
+}
+
+type PassChangePasswordPayload {
+  error: String
+  pass: Pass
+  clientMutationId: String
+}
+
+input PassCreateInput {
+  website: String!
+  password: String!
+  user: String!
+  clientMutationId: String
+}
+
+type PassCreatePayload {
+  error: String
+  pass: Pass
+  clientMutationId: String
+}
+
+"""An edge in a connection."""
+type PassEdge {
+  """The item at the end of the edge"""
+  node: Pass!
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
 """The root of all... queries"""
 type Query {
   """Fetches an object given its ID"""
@@ -35,10 +85,13 @@ type Query {
   me: User
   user(id: ID!): User
   users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
+  pass(id: ID!): Pass
+  passes(id: ID!): [Pass!]
 }
 
 type Subscription {
   UserAdded: UserAddedPayload
+  PassAdded: PassAddedPayload
 }
 
 """User data"""

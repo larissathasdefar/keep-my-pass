@@ -1,11 +1,10 @@
-
-
-import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID } from 'graphql';
+import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList, GraphQLID } from 'graphql';
 import { connectionArgs, fromGlobalId } from 'graphql-relay';
 
 import UserType, { UserConnection } from '../modules/user/UserType';
+import PassType, { PassConnection } from '../modules/pass/PassType';
 import { nodeField } from '../interface/NodeInterface';
-import { UserLoader } from '../loader';
+import { UserLoader, PassLoader } from '../loader';
 
 export default new GraphQLObjectType({
   name: 'Query',
@@ -37,6 +36,28 @@ export default new GraphQLObjectType({
         },
       },
       resolve: (obj, args, context) => UserLoader.loadUsers(context, args),
+    },
+    pass: {
+      type: PassType,
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLID),
+        },
+      },
+      resolve: (obj, args, context) => {
+        return PassLoader.load(context, args.id);
+      },
+    },
+    passes: {
+      type: new GraphQLList(new GraphQLNonNull(PassType)),
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLID),
+        },
+      },
+      resolve: (obj, args, context) => {
+        return PassLoader.loadPasses(context, args.id);
+      },
     },
   }),
 });

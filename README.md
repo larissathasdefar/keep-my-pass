@@ -2,7 +2,6 @@
 
 It's an Node + Mongo + Mongoose + Koa api that intend to store your passwords.
 
-
 ### Status
 
 - [x] GraphQL

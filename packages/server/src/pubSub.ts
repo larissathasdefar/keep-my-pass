@@ -4,6 +4,9 @@ export const EVENTS = {
   USER: {
     ADDED: 'USER_ADDED',
   },
+  PASS: {
+    ADDED: 'PASS_ADDED',
+  },
 };
 
 export default new PubSub();
