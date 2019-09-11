@@ -12,7 +12,7 @@ const schema = new mongoose.Schema(
       required: true,
     },
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: true,
       ref: 'User',
     },
