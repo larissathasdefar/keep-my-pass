@@ -26,10 +26,13 @@ const mongooseOptions = {
 
 export async function connectMongoose() {
   jest.setTimeout(20000);
-  return mongoose.connect(global.__MONGO_URI__, {
-    ...mongooseOptions,
-    dbName: global.__MONGO_DB_NAME__,
-  });
+  return mongoose.connect(
+    global.__MONGO_URI__,
+    {
+      ...mongooseOptions,
+      dbName: global.__MONGO_DB_NAME__,
+    },
+  );
 }
 
 export async function clearDatabase() {
