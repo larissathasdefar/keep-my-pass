@@ -1,7 +1,5 @@
-
-
 import mongoose from 'mongoose';
-// import { databaseConfig } from './config';
+import { databaseConfig } from './config';
 
 export function connectDatabase() {
   return new Promise((resolve, reject) => {
@@ -12,8 +10,7 @@ export function connectDatabase() {
       .once('open', () => resolve(mongoose.connections[0]));
 
     mongoose.connect(
-      // databaseConfig,
-      'mongodb+srv://app:keep-my-pass@keep-my-pass-lam22.mongodb.net/entria?retryWrites=true',
+      databaseConfig,
       {
         useNewUrlParser: true,
         useCreateIndex: true,

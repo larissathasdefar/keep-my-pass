@@ -1,6 +1,6 @@
 /* eslint implicit-arrow-linebreak: 0 */
-
-import '@babel/polyfill';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import { createServer } from 'http';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
@@ -26,21 +26,22 @@ logger.add(getConsoleTransport('graphql-main'));
 
   server.listen(graphqlPort, () => {
     logger.info(`Server started on port :${graphqlPort}`);
-    SubscriptionServer.create(
-      {
-        onConnect: connectionParams =>
-          logger.info('Client subscription connected!', connectionParams),
-        onDisconnect: () => logger.info('Client subscription disconnected!'),
-        execute,
-        subscribe,
-        schema,
-      },
-      {
-        server,
-        path: '/subscriptions',
-      },
-    );
   });
+
+  SubscriptionServer.create(
+    {
+      onConnect: connectionParams =>
+        logger.info('Client subscription connected!', connectionParams),
+      onDisconnect: () => logger.info('Client subscription disconnected!'),
+      execute,
+      subscribe,
+      schema,
+    },
+    {
+      server,
+      path: '/subscriptions',
+    },
+  );
 })();
 
 let currentApp = app;

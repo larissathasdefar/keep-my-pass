@@ -20,7 +20,8 @@ const dBproduction = ENV.MONGO_URL || 'mongodb://localhost/database';
 // const test = 'mongodb://localhost/awesome-test';
 
 // Export DB Settings
-export const databaseConfig = ENV.NODE_ENV === 'production' ? dBproduction : dBdevelopment;
+// export const databaseConfig = ENV.NODE_ENV === 'production' ? dBproduction : dBdevelopment;
+export const databaseConfig = 'mongodb+srv://app:keep-my-pass@keep-my-pass-lam22.mongodb.net/keep-my-pass?retryWrites=true';
 
 // Export GraphQL Server settings
 export const graphqlPort = ENV.GRAPHQL_PORT || 5000;
