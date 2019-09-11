@@ -23,7 +23,7 @@ export default mutationWithClientMutationId({
     },
   },
   mutateAndGetPayload: async ({ website, password }, { user }) => {
-    let owner = await UserModel.findOne({ _id: user });
+    let owner = await UserModel.findById(user);
 
     if (!owner) {
       return {
