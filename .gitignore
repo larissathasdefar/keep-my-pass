@@ -8,6 +8,7 @@ build
 yarn-error.log
 .cache
 .vs/
+.vscode/
 
 # IDE/Editor GraphQL Extensions
 graphql.*.json

@@ -54,13 +54,13 @@ export const clearAndPrimeCache = (context: GraphQLContext, id: Types.ObjectId, 
 type PassArgs = ConnectionArguments & {
   search?: string;
 };
-export const loadPasses = async (context: GraphQLContext, pass: PassArgs) => {
-  if (!pass) {
+export const loadPasses = async (context: GraphQLContext, email: PassArgs) => {
+  if (!email) {
     return null;
   }
 
   try {
-    const passes = await PassModel.find({ pass });
+    const passes = await PassModel.find({ user: email });
     return passes;
   } catch (err) {
     return null;

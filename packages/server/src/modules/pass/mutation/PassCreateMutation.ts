@@ -50,7 +50,7 @@ export default mutationWithClientMutationId({
     },
     pass: {
       type: PassType,
-      resolve: (obj, args, context) => PassLoader.load(context, context.pass.id),
+      resolve: (obj, args, context) => PassLoader.load(context, obj.pass.id),
     },
   },
 });
