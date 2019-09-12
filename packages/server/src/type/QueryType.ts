@@ -51,12 +51,12 @@ export default new GraphQLObjectType({
     passes: {
       type: new GraphQLList(new GraphQLNonNull(PassType)),
       args: {
-        id: {
-          type: new GraphQLNonNull(GraphQLID),
+        email: {
+          type: new GraphQLNonNull(GraphQLString),
         },
       },
       resolve: (obj, args, context) => {
-        return PassLoader.loadPasses(context, args.id);
+        return PassLoader.loadPasses(context, args.email);
       },
     },
   }),
