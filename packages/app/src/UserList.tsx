@@ -124,7 +124,7 @@ const UserListPaginationContainer = createPaginationContainer(
             }
           }
         }
-      } 
+      }
     `,
   },
   {
@@ -139,6 +139,7 @@ const UserListPaginationContainer = createPaginationContainer(
       };
     },
     getVariables(props, { count, cursor }, fragmentVariables) {
+      console.log('eeeeeeee', props, fragmentVariables)
       return {
         count,
         cursor,

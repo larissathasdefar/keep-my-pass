@@ -20,7 +20,9 @@ const UserType = registerType(
       },
       email: {
         type: GraphQLString,
-        resolve: user => user.email,
+        resolve: user => {
+          return user.email
+        },
       },
       active: {
         type: GraphQLBoolean,

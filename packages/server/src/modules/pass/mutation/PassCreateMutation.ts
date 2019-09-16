@@ -15,6 +15,9 @@ export default mutationWithClientMutationId({
     website: {
       type: new GraphQLNonNull(GraphQLString),
     },
+    login: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
     password: {
       type: new GraphQLNonNull(GraphQLString),
     },
@@ -22,7 +25,7 @@ export default mutationWithClientMutationId({
       type: new GraphQLNonNull(GraphQLString),
     },
   },
-  mutateAndGetPayload: async ({ website, password, user }) => {
+  mutateAndGetPayload: async ({ website, login, password, user }) => {
     let owner = await UserModel.findOne({ email: user.toLowerCase() })
 
     if (!owner) {
@@ -33,6 +36,7 @@ export default mutationWithClientMutationId({
 
     let pass = new PassModel({
       website,
+      login,
       user,
       password,
     });

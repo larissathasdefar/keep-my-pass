@@ -45,19 +45,19 @@ export default new GraphQLObjectType({
         },
       },
       resolve: (obj, args, context) => {
-        return PassLoader.load(context, args.id);
+        const { id } = fromGlobalId(args.id);
+        return PassLoader.load(context, id);
       },
     },
     passes: {
-      type: new GraphQLList(new GraphQLNonNull(PassType)),
+      type: PassConnection.connectionType,
       args: {
+        ...connectionArgs,
         email: {
           type: new GraphQLNonNull(GraphQLString),
         },
       },
-      resolve: (obj, args, context) => {
-        return PassLoader.loadPasses(context, args.email);
-      },
+      resolve: (obj, args, context) => PassLoader.loadPasses(context, args),
     },
   }),
 });

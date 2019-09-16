@@ -7,6 +7,10 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    login: {
+      type: String,
+      required: true,
+    },
     password: {
       type: String,
       required: true,
@@ -28,6 +32,7 @@ const schema = new mongoose.Schema(
 
 export interface IPass extends Document {
   website: string;
+  login: string;
   password: string;
   user: string;
   authenticate: (plainTextPassword: string) => boolean;
