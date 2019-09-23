@@ -43,6 +43,9 @@ type PassAddedPayload {
 }
 
 input PassChangePasswordInput {
+  """password global id"""
+  id: String!
+
   """pass new password"""
   password: String!
   clientMutationId: String
@@ -84,7 +87,6 @@ input PassCreateInput {
   website: String!
   login: String!
   password: String!
-  user: String!
   clientMutationId: String
 }
 
@@ -114,7 +116,7 @@ type Query {
   user(id: ID!): User
   users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
   pass(id: ID!): Pass
-  passes(after: String, first: Int, before: String, last: Int, email: String!): PassConnection
+  passes(after: String, first: Int, before: String, last: Int, email: String): PassConnection
 }
 
 type Subscription {

@@ -54,7 +54,7 @@ export default new GraphQLObjectType({
       args: {
         ...connectionArgs,
         email: {
-          type: new GraphQLNonNull(GraphQLString),
+          type: GraphQLString,
         },
       },
       resolve: (obj, args, context) => PassLoader.loadPasses(context, args),

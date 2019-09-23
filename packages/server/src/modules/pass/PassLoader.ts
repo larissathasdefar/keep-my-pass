@@ -58,10 +58,10 @@ type PassArgs = ConnectionArguments & {
   email: string;
 };
 export const loadPasses = async (context: GraphQLContext, args: PassArgs) => {
-  if (!args.email) {
+  if (!context.user && !args.email) {
     return null;
   }
-  const passes = PassModel.find({ user: args.email });
+  const passes = PassModel.find({ user: (context.user || args).email });
   return connectionFromMongoCursor({
     cursor: passes,
     context,
