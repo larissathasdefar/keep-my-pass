@@ -1,13 +1,11 @@
 
 import { GraphQLString, GraphQLNonNull } from 'graphql';
 import { mutationWithClientMutationId } from 'graphql-relay';
-
+import { GraphQLContext } from '../../../TypeDefinition';
 import pubSub, { EVENTS } from '../../../pubSub';
-
 import PassType from '../PassType';
 import * as PassLoader from '../PassLoader';
 import PassModel from '../PassModel';
-import UserModel from '../../user/UserModel';
 
 export default mutationWithClientMutationId({
   name: 'PassCreate',
@@ -15,25 +13,22 @@ export default mutationWithClientMutationId({
     website: {
       type: new GraphQLNonNull(GraphQLString),
     },
+    login: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
     password: {
       type: new GraphQLNonNull(GraphQLString),
     },
-    user: {
-      type: new GraphQLNonNull(GraphQLString),
-    },
   },
-  mutateAndGetPayload: async ({ website, password, user }) => {
-    let owner = await UserModel.findOne({ email: user.toLowerCase() })
-
-    if (!owner) {
-      return {
-        error: 'User not valid.',
-      };
+  mutateAndGetPayload: async ({ website, login, password }, { user }: GraphQLContext) => {
+    if (!user) {
+      return {error: 'User not valid.'};
     }
 
     let pass = new PassModel({
       website,
-      user,
+      login,
+      user: user.email,
       password,
     });
 

@@ -18,6 +18,10 @@ const PassType = registerType(
         type: GraphQLString,
         resolve: pass => pass.website,
       },
+      login: {
+        type: GraphQLString,
+        resolve: pass => pass.login,
+      },
       password: {
         type: GraphQLString,
         resolve: pass => pass.password,

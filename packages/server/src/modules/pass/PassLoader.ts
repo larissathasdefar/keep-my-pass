@@ -16,6 +16,8 @@ export default class Pass {
 
   website: string;
 
+  login: string;
+
   password: string;
 
   user: string;
@@ -24,6 +26,7 @@ export default class Pass {
     this.id = data._id;
     this._id = data._id;
     this.website = data.website;
+    this.login = data.login;
     this.user = data.user;
     this.password = data.password;
   }
@@ -52,17 +55,17 @@ export const primeCache = ({ dataloaders }: GraphQLContext, id: Types.ObjectId, 
 export const clearAndPrimeCache = (context: GraphQLContext, id: Types.ObjectId, data: IPass) => clearCache(context, id) && primeCache(context, id, data);
 
 type PassArgs = ConnectionArguments & {
-  search?: string;
+  email: string;
 };
-export const loadPasses = async (context: GraphQLContext, email: PassArgs) => {
-  if (!email) {
+export const loadPasses = async (context: GraphQLContext, args: PassArgs) => {
+  if (!context.user && !args.email) {
     return null;
   }
-
-  try {
-    const passes = await PassModel.find({ user: email });
-    return passes;
-  } catch (err) {
-    return null;
-  }
+  const passes = PassModel.find({ user: (context.user || args).email });
+  return connectionFromMongoCursor({
+    cursor: passes,
+    context,
+    args,
+    loader: load,
+  });
 };
